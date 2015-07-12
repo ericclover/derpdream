@@ -18,7 +18,7 @@ def showarray(a, fmt='jpeg'):
     PIL.Image.fromarray(a).save(f, fmt)
     display(Image(data=f.getvalue()))
  
-model_path = '/root/caffe/caffe/models/bvlc_googlenet/' # substitute your path here
+model_path = '../caffe/models/bvlc_googlenet/' # substitute your path here
 net_fn   = model_path + 'deploy.prototxt'
 param_fn = model_path + 'bvlc_googlenet.caffemodel'
  
@@ -94,16 +94,8 @@ def deepdream(net, base_img, iter_n=10, octave_n=4, octave_scale=1.4, end='incep
     # returning the resulting image
     return deprocess(net, src.data[0])
  
-# this is my humble addition/modification
-import cv2
-#if not len(sys.argv) > 1: # check arguments to script
-#    print "Usage: ./deepdream.py input_file output_file [level]"
-#    sys.exit()
- 
 if len(sys.argv) == 3:	  # set default end/layer
     layer = sys.argv[2]
-#    layer = "pool5/7x7_s1"
-#s = sys.argv[2]
 ss = sys.argv[1]
 img2 = (layer.replace('/', '-'))
 img = cv2.imread(sys.argv[1])
@@ -113,7 +105,3 @@ imgn = os.path.join(img1 + "-" + img2 + "." + img3)
 dd = deepdream(net, img, end=layer)
 cv2.imwrite(imgn, dd)
 print imgn
-#print img1
-#print img2
-#print img3
-#cv2.imwrite(sys.argv[2], dd)
